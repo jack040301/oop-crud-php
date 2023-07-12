@@ -204,7 +204,7 @@
                     </div>
 
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary" value="submit" name="submitadd"><span class="ms-2">Add</span></button>
+                        <button type="submit" class="btn btn-success" value="submit" name="submitadd"><span class="ms-2">Add</span></button>
                     </div>
                 </form>
             </div>
@@ -215,7 +215,7 @@
 
 
 
-        <!-- tampilkan pesan sukses dihapus -->
+        <!-- notif handler -->
         <?php if (isset($_GET['deletefunc'])) : ?>
             <?php
             if ($_GET['deletefunc'] == 'success')
@@ -230,8 +230,8 @@
                       </div>";
             ?>
         <?php endif; ?>
+        <!-- notif handler -->
 
-        <!-- tampilkan pesan sukses di edit -->
         <?php if (isset($_GET['update'])) : ?>
             <?php
             if ($_GET['update'] == 'success')
@@ -247,7 +247,7 @@
             ?>
         <?php endif; ?>
 
-        <!-- tabel -->
+        <!-- table -->
         <div class="table-responsive mb-5 card">
             <?php
             echo "<div class='card-body'>";
@@ -293,16 +293,15 @@
             $count_data = mysqli_num_rows($data);
             $total_data = ceil($count_data / $min_record);
 
-            $data_mhs = mysqli_query($db, "SELECT * FROM officer_record LIMIT $count, $min_record");
+            $datarecords = mysqli_query($db, "SELECT * FROM officer_record LIMIT $count, $min_record");
             $no = $count + 1;
 
-            // $sql = "SELECT * FROM mahasiswa";
-            // $query = mysqli_query($db, $sql);
 
 
 
 
-            while ($data = mysqli_fetch_array($data_mhs)) {
+
+            while ($data = mysqli_fetch_array($datarecords)) {
                 echo "<tr>";
                 echo "<td style='display:none'>" . $data['ID'] . "</td>";
                 echo "<td>" . $data['ID'] . "</td>";
@@ -558,7 +557,7 @@
         </div>
 
 
-        <!-- tutup container -->
+     
     </div>
 
 
