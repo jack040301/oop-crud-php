@@ -1,6 +1,6 @@
 #CRUD APPLICATION
 
-move into the htdocs of XAMPP folder in storage drive
+move this folder to the htdocs of XAMPP folder in storage drive
 
 import the office_record.sql in the MySQL Database
 
