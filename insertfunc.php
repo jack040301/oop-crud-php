@@ -2,6 +2,8 @@
 <?php
 include("./config.php");
 
+include("./class/officer_data.php");
+
 if (isset($_POST['submitadd'])) {
    
     $doc_type = $_POST['DOC_TYPE'];
@@ -26,18 +28,36 @@ if (isset($_POST['submitadd'])) {
      $forw_mess = $_POST['POST_MESSAGE'];
      
     // query in inserting
-  
+    
 
-  $query = mysqli_query($db,"INSERT INTO officer_record(DOC_TYPE, DOC_CATEG, DOC_TITLE, DOC_DESC, ATTACH, CREATED_BY_DESIG, CREATED_BY_ROLE, CREATED_BY_EMAIL, UPDATED_BY_NAME, UPDATED_BY_DESIG, UPDATED_BY_ROLE, UPDATED_BY_EMAIL, DATE_CREATED, DATE_UPDATED, FORWARD_TO_NAME, FORWARD_TO_ROLE, FORWARD_TO_DESIG, FORWARD_TO_EMAIL, ACTION,MESSAGE) VALUES  ('$doc_type','$doc_categ','$doc_title','$doc_desc','$attach','$created_desig','$created_role','$create_email','$up_name','$up_des','$up_role','$up_email','$date_created','$date_up','$forw_name','$forw_role','$forw_desig','$forw_email','$forw_act','$forw_mess')");
+  $officer_data = new OfficerData($db);
 
+    $officer_data->setDoc_type($doc_type);
+    $officer_data->setDoc_categ($doc_categ);
+        $officer_data->setDoc_title($doc_title);
+        $officer_data->setDoc_desc($doc_desc);
+        $officer_data->setAttach($attach);
+        $officer_data->setCreated_desig($created_desig);
+        $officer_data->setCreated_role($created_role);
+        $officer_data->setCreate_email($create_email);
+        $officer_data->setUp_name($up_name);
+        $officer_data->setUp_des($up_des);
+        $officer_data->setUp_role($up_role);
+        $officer_data->setUp_email($up_email);
+        $officer_data->setDate_created($date_created);
+        $officer_data->setDate_up($date_up);
+        $officer_data->setForw_name($forw_name);
+        $officer_data->setForw_role($forw_role);
+        $officer_data->setForw_desig($forw_desig);
+        $officer_data->setForw_email($forw_email);
+        $officer_data->setForw_act($forw_act);
+        $officer_data->setForw_mess($forw_mess);
 
-
-
-
+  //$officer_save->save();
 
       // determine if success or not
 
-    if ($query)
+    if ($officer_data->save())
         header('Location: ./index.php?status=success');
     else
         header('Location: ./index.php?status=error');
