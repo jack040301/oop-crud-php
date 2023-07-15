@@ -2,9 +2,7 @@
 include("./config.php");
 include("./class/officer_data.php");
 
-// cek apa tombol daftar udah di klik blom
 if (isset($_POST['edit_data'])) {
-    // ambil data dari form
 
     $id = $_POST['EDIT_ID'];
     $doc_type = $_POST['EDIT_DOC_TYPE'];

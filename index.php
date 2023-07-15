@@ -1,4 +1,7 @@
-<?php include("./config.php"); ?>
+<?php include("./config.php"); 
+include("./class/officer_data.php");
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -282,52 +285,40 @@
 
 
 
-            $min_record = 10;
-            $page = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
-            $count = ($page > 1) ? ($page * $num) - $num : 0;
+  
 
-            $previous = $page - 1;
-            $next = $page + 1;
+            $officer_data_read = new OfficerData($db);
+            $officers = $officer_data_read->read();
 
-            $data = mysqli_query($db, "SELECT * FROM officer_record");
-            $count_data = mysqli_num_rows($data);
-            $total_data = ceil($count_data / $min_record);
+            $officer_count = $officer_data_read->count_read();
 
-            $datarecords = mysqli_query($db, "SELECT * FROM officer_record LIMIT $count, $min_record");
-            $no = $count + 1;
-
-
-
-
-
-
-            while ($data = mysqli_fetch_array($datarecords)) {
+            foreach ($officers as $officer_data_read) {
                 echo "<tr>";
-                echo "<td style='display:none'>" . $data['ID'] . "</td>";
-                echo "<td>" . $data['ID'] . "</td>";
-                echo "<td>" . $data['DOC_TYPE'] . "</td>";
-                echo "<td>" . $data['DOC_TITLE'] . "</td>";
+                echo "<td style='display:none'>" . $officer_data_read['ID'] . "</td>";
+                echo "<td>" . $officer_data_read['ID'] . "</td>";
+                echo "<td>" . $officer_data_read['DOC_TYPE'] . "</td>";
+                echo "<td>" . $officer_data_read['DOC_TITLE'] . "</td>";
 
-                echo "<td>" . $data['DOC_CATEG'] . "</td>";
-                echo "<td>" . $data['DOC_DESC'] . "</td>";
-                echo "<td>" . $data['ATTACH'] . "</td>";
-                echo "<td>" . $data['CREATED_BY_DESIG'] . "</td>";
+                echo "<td>" . $officer_data_read['DOC_CATEG'] . "</td>";
+                echo "<td>" . $officer_data_read['DOC_DESC'] . "</td>";
+                echo "<td>" . $officer_data_read['ATTACH'] . "</td>";
+                echo "<td>" . $officer_data_read['CREATED_BY_DESIG'] . "</td>";
 
-                echo "<td>" . $data['CREATED_BY_ROLE'] . "</td>";
-                echo "<td>" . $data['CREATED_BY_EMAIL'] . "</td>";
-                echo "<td>" . $data['UPDATED_BY_NAME'] . "</td>";
-                echo "<td>" . $data['UPDATED_BY_DESIG'] . "</td>";
-                echo "<td>" . $data['UPDATED_BY_ROLE'] . "</td>";
-                echo "<td>" . $data['UPDATED_BY_EMAIL'] . "</td>";
-                echo "<td>" . $data['DATE_CREATED'] . "</td>";
+                echo "<td>" . $officer_data_read['CREATED_BY_ROLE'] . "</td>";
+                echo "<td>" . $officer_data_read['CREATED_BY_EMAIL'] . "</td>";
+                echo "<td>" . $officer_data_read['UPDATED_BY_NAME'] . "</td>";
+                echo "<td>" . $officer_data_read['UPDATED_BY_DESIG'] . "</td>";
+                echo "<td>" . $officer_data_read['UPDATED_BY_ROLE'] . "</td>";
+                echo "<td>" . $officer_data_read['UPDATED_BY_EMAIL'] . "</td>";
+                echo "<td>" . $officer_data_read['DATE_CREATED'] . "</td>";
 
-                echo "<td>" . $data['DATE_UPDATED'] . "</td>";
-                echo "<td>" . $data['FORWARD_TO_NAME'] . "</td>";
-                echo "<td>" . $data['FORWARD_TO_ROLE'] . "</td>";
-                echo "<td>" . $data['FORWARD_TO_DESIG'] . "</td>";
-                echo "<td>" . $data['FORWARD_TO_EMAIL'] . "</td>";
-                echo "<td>" . $data['ACTION'] . "</td>";
-                echo "<td>" . $data['MESSAGE'] . "</td>";
+                echo "<td>" . $officer_data_read['DATE_UPDATED'] . "</td>";
+                echo "<td>" . $officer_data_read['FORWARD_TO_NAME'] . "</td>";
+                echo "<td>" . $officer_data_read['FORWARD_TO_ROLE'] . "</td>";
+                echo "<td>" . $officer_data_read['FORWARD_TO_DESIG'] . "</td>";
+                echo "<td>" . $officer_data_read['FORWARD_TO_EMAIL'] . "</td>";
+                echo "<td>" . $officer_data_read['ACTION'] . "</td>";
+                echo "<td>" . $officer_data_read['MESSAGE'] . "</td>";
 
 
                 echo "<td class='text-center'>";
@@ -343,12 +334,13 @@
                 echo "</tr>";
             }
 
+
             echo "</tbody>";
             echo "</table>";
-            if ($count_data == 0) {
-                echo "<p class='text-center'>No entries</p>";
+            if ($officer_count == 0) {
+                echo "<p class='text-center'> No entries</p>";
             } else {
-                echo "<p>Total $count_data entries</p>";
+                echo "<p>Total $officer_count entries</p>";
             }
 
             echo "</div>";
@@ -366,11 +358,7 @@
                         <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
                     </div>
 
-                    <?php
-                    $sql = "SELECT * FROM officer_record ";
-                    $query = mysqli_query($db, $sql);
-                    $mahasiswa = mysqli_fetch_array($query);
-                    ?>
+               
 
                     <form action='edit.php' method='POST'>
                         <div class='modal-body text-start'>

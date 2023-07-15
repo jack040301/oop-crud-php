@@ -2,38 +2,40 @@
 
 
 
-class OfficerData {
-  
+class OfficerData
+{
+
     public $db;
     private $id;
-    private $doc_type ;
-    private $doc_categ ;
-    private $doc_title ;
-    private $doc_desc ;
-    private $attach ;
-    private $created_desig ;
+    private $doc_type;
+    private $doc_categ;
+    private $doc_title;
+    private $doc_desc;
+    private $attach;
+    private $created_desig;
     private $created_role;
     private $create_email;
     private $up_name;
-    private $up_des ;
-    private $up_role ;
-    private $up_email ;
+    private $up_des;
+    private $up_role;
+    private $up_email;
     private  $date_created;
     private $date_up;
-    private $forw_name ;
+    private $forw_name;
     private $forw_role;
-    private $forw_desig ;
-    private $forw_email ;
-    private $forw_act ;
+    private $forw_desig;
+    private $forw_email;
+    private $forw_act;
     private  $forw_mess;
 
-    public function __construct($db) {
+    public function __construct($db)
+    {
         $this->db = $db;
     }
 
 
     // Constructor
-/*     public function __construct($db,$doc_type, $doc_categ, $doc_title, $doc_desc, $attach, $created_desig, $created_role, $create_email, $up_name, $up_des, $up_role, $up_email, $date_created, $date_up, $forw_name, $forw_role, $forw_desig, $forw_email, $forw_act, $forw_mess) {
+    /*     public function __construct($db,$doc_type, $doc_categ, $doc_title, $doc_desc, $attach, $created_desig, $created_role, $create_email, $up_name, $up_des, $up_role, $up_email, $date_created, $date_up, $forw_name, $forw_role, $forw_desig, $forw_email, $forw_act, $forw_mess) {
        $this->db = $db;
         $this->doc_type = $doc_type;
         $this->doc_categ = $doc_categ;
@@ -276,7 +278,8 @@ class OfficerData {
         $this->forw_mess = $forw_mess;
     }
 
-    public function delete() {
+    public function delete()
+    {
         $stmt = $this->db->prepare("DELETE FROM officer_record WHERE ID = ?");
         $stmt->bind_param("i", $this->id);
 
@@ -288,28 +291,36 @@ class OfficerData {
     }
 
 
- 
-
-    public function update() {
-
-            $stmt = $this->db->prepare("UPDATE officer_record SET DOC_TYPE = ?, DOC_CATEG = ?, DOC_TITLE = ?, DOC_DESC = ?, ATTACH = ?, CREATED_BY_DESIG = ?, CREATED_BY_ROLE = ?, CREATED_BY_EMAIL = ?, UPDATED_BY_NAME = ?, UPDATED_BY_DESIG = ?, UPDATED_BY_ROLE = ?, UPDATED_BY_EMAIL = ?, DATE_CREATED = ?, DATE_UPDATED = ?, FORWARD_TO_NAME = ?, FORWARD_TO_ROLE = ?, FORWARD_TO_DESIG = ?, FORWARD_TO_EMAIL = ?, ACTION = ?,MESSAGE = ? WHERE ID = ?");
-            $stmt->bind_param("ssssssssssssssssssssi",$this->doc_type, $this->doc_categ,$this->doc_title, $this->doc_desc, $this->attach, $this->created_desig, $this->created_role, $this->create_email, $this->up_name, $this->up_des, $this->up_role, $this->up_email, $this->date_created, $this->date_up, $this->forw_name, $this->forw_role, $this->forw_desig, $this->forw_email, $this->forw_act, $this->forw_mess,$this->id);
-     
-
-            if ($stmt->execute()) {
-              
-                return true;
-            } else {
-                // Failure
-                return false;
-            }
 
 
+    public function update()
+    {
+
+        $stmt = $this->db->prepare("UPDATE officer_record SET DOC_TYPE = ?, DOC_CATEG = ?, DOC_TITLE = ?, DOC_DESC = ?, ATTACH = ?, CREATED_BY_DESIG = ?, CREATED_BY_ROLE = ?, CREATED_BY_EMAIL = ?, UPDATED_BY_NAME = ?, UPDATED_BY_DESIG = ?, UPDATED_BY_ROLE = ?, UPDATED_BY_EMAIL = ?, DATE_CREATED = ?, DATE_UPDATED = ?, FORWARD_TO_NAME = ?, FORWARD_TO_ROLE = ?, FORWARD_TO_DESIG = ?, FORWARD_TO_EMAIL = ?, ACTION = ?,MESSAGE = ? WHERE ID = ?");
+        $stmt->bind_param("ssssssssssssssssssssi", $this->doc_type, $this->doc_categ, $this->doc_title, $this->doc_desc, $this->attach, $this->created_desig, $this->created_role, $this->create_email, $this->up_name, $this->up_des, $this->up_role, $this->up_email, $this->date_created, $this->date_up, $this->forw_name, $this->forw_role, $this->forw_desig, $this->forw_email, $this->forw_act, $this->forw_mess, $this->id);
 
 
+        if ($stmt->execute()) {
+
+            return true;
+        } else {
+            // Failure
+            return false;
+        }
     }
 
-   /*  public function read() {
+
+    public function count_read()
+    {
+
+        $result = $this->db->query("SELECT COUNT(*) as total FROM officer_record");
+
+        $row = $result->fetch_assoc();
+        return $row['total'];
+    }
+
+    public function read()
+    {
 
         $result = $this->db->query("SELECT * FROM officer_record");
         $officer_data = [];
@@ -319,41 +330,29 @@ class OfficerData {
         }
 
         return $officer_data;
-
-
-
     }
- */
 
-    public function save() {
+
+    public function save()
+    {
 
         try {
 
             $stmt = $this->db->prepare("INSERT INTO officer_record(DOC_TYPE, DOC_CATEG, DOC_TITLE, DOC_DESC, ATTACH, CREATED_BY_DESIG, CREATED_BY_ROLE, CREATED_BY_EMAIL, UPDATED_BY_NAME, UPDATED_BY_DESIG, UPDATED_BY_ROLE, UPDATED_BY_EMAIL, DATE_CREATED, DATE_UPDATED, FORWARD_TO_NAME, FORWARD_TO_ROLE, FORWARD_TO_DESIG, FORWARD_TO_EMAIL, ACTION,MESSAGE) VALUES  (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-            $stmt->bind_param("ssssssssssssssssssss",$this->doc_type, $this->doc_categ,$this->doc_title, $this->doc_desc, $this->attach, $this->created_desig, $this->created_role, $this->create_email, $this->up_name, $this->up_des, $this->up_role, $this->up_email, $this->date_created, $this->date_up, $this->forw_name, $this->forw_role, $this->forw_desig, $this->forw_email, $this->forw_act, $this->forw_mess);
-     
-            
+            $stmt->bind_param("ssssssssssssssssssss", $this->doc_type, $this->doc_categ, $this->doc_title, $this->doc_desc, $this->attach, $this->created_desig, $this->created_role, $this->create_email, $this->up_name, $this->up_des, $this->up_role, $this->up_email, $this->date_created, $this->date_up, $this->forw_name, $this->forw_role, $this->forw_desig, $this->forw_email, $this->forw_act, $this->forw_mess);
+
+
 
             if ($stmt->execute()) {
-              
+
                 return true;
             } else {
                 // Failure
                 return false;
             }
-
-
         } catch (Exception $e) {
             // Handle the error or throw an exception
             die("Save failed: " . $e->getMessage());
         }
     }
 }
-
-
-
-
-
-
-
-?>

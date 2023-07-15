@@ -53,7 +53,6 @@ if (isset($_POST['submitadd'])) {
         $officer_data->setForw_act($forw_act);
         $officer_data->setForw_mess($forw_mess);
 
-  //$officer_save->save();
 
       // determine if success or not
 
