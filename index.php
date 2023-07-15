@@ -14,7 +14,10 @@ include("./class/officer_data.php");
 
     <!-- bootstrap cdn -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-
+    <script
+  src="https://code.jquery.com/jquery-3.7.0.js"
+  integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+  crossorigin="anonymous"></script>
     <!-- material icon -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
@@ -60,7 +63,7 @@ include("./class/officer_data.php");
                 <?php endif; ?>
 
 
-                <form class="row g-3" action="insertfunc.php" method="POST">
+                <form class="row g-3" id="formAddData"  method="post">
 
                     <div class="col-md-4">
                         <label for="exampleInputEmail1">DOCUMENT TYPE </label>
@@ -207,7 +210,7 @@ include("./class/officer_data.php");
                     </div>
 
                     <div class="col-12">
-                        <button type="submit" class="btn btn-success" value="submit" name="submitadd"><span class="ms-2">Add</span></button>
+                        <button type="submit" class="btn btn-success" value="submit" name="submitadd"><span class="ms-2">Submit</span></button>
                     </div>
                 </form>
             </div>
@@ -624,6 +627,32 @@ include("./class/officer_data.php");
             window.location.href = './index.php';
         }
     </script>
+
+    <script>
+
+     $(document).ready(function() {
+            $('#formAddData').submit(function(e) {
+                e.preventDefault(); // Prevent the form from submitting normally
+
+
+                $.ajax({
+                    url: 'insertfunc.php',
+                    type: 'POST',
+                    data:  $(this).serialize(),
+                    success: function(response) {
+                        // Process the response if needed
+                        console.log(response)
+                    },
+                    error: function(xhr, status, error) {
+
+                         // Log any errors to the console
+                       console.log(xhr.responseText); // Log any errors to the console
+                    }
+                });
+            });
+        });
+        
+        </script>
 </body>
 
 </html>

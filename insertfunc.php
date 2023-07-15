@@ -4,7 +4,7 @@ include("./config.php");
 
 include("./class/officer_data.php");
 
-if (isset($_POST['submitadd'])) {
+if (isset($_POST['DOC_TYPE'])) {
    
     $doc_type = $_POST['DOC_TYPE'];
     $doc_categ = $_POST['DOC_CATEG'];
@@ -57,8 +57,12 @@ if (isset($_POST['submitadd'])) {
       // determine if success or not
 
     if ($officer_data->save())
+      
         header('Location: ./index.php?status=success');
+
     else
         header('Location: ./index.php?status=error');
-} else
+
+    
+} else 
     die("error");
